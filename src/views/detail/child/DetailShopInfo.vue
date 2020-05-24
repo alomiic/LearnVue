@@ -58,7 +58,7 @@
   }
 </script>
 
-<style>
+<style scoped>
   .shop{
     padding: 20px 5px;
     border-bottom: 5px solid #eee;

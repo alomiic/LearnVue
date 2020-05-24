@@ -6,7 +6,7 @@ const Category = () => import('views/category/Category')
 const Cart = () => import('views/cart/Cart')
 const Profile = () => import('views/profile/Profile')
 const Detail = () => import('views/detail/Detail')
-
+const Login = () => import('views/login/Login')
 //  重写路由的push方法
 // 解决两次访问相同路由地址报错
 
@@ -19,20 +19,6 @@ VueRouter.prototype.push = function push(location) {
 Vue.use(VueRouter)
 
 const routes = [
-  // {
-  //   path: '/',
-  //   name: 'home',
-  //   component: Home
-  // },
-  // {
-  //   path: '/about',
-  //   name: 'about',
-  //   // route level code-splitting
-  //   // this generates a separate chunk (about.[hash].js) for this route
-  //   // which is lazy-loaded when the route is visited.
-  //   component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  // }
-
   {
     path: '/',
     redirect: '/home'
@@ -56,13 +42,32 @@ const routes = [
   {
     path:'/detail/:iid',
     component:Detail
+  },
+  {
+    path:'/login',
+    component:Login
   }
 
 ]
 
 const router = new VueRouter({
   routes,
-  mode:'history'
+  mode:'history',
+  // scrollBehavior (to, from, savedPosition){
+  //   //return desired position}
+  //   if (to.hash) {
+  //     return {
+  //       selector: to.hash
+  //     }
+  //   }
+    
+  // }
+  // scrollBehavior(to, from, savedPosition) {
+  //   if (savedPosition && to.meta.keepAlive) {
+  //     return savedPosition;
+  //   }
+  //   return { x: 0, y:0 };
+  // }
 })
 
 export default router

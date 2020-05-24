@@ -1,7 +1,7 @@
 <template>
   <div>
     <nav-bar class="nav">
-      <div slot="left">＜</div>
+      <div slot="left" @click="backClick">＜</div>
       <div slot="center" class="nav-bar">
         <div v-for="(item,index) in titles" 
             :key="index" 
@@ -29,6 +29,9 @@
     methods: {
       itemClick(index){
         this.currentIndex = index
+      },
+      backClick(){
+        this.$router.back()
       }
     }
   }

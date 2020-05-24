@@ -19,6 +19,7 @@
 </script>
 <style scoped>
   #nav-bar {
+    z-index: 10;
     line-height: 44px;
     
     display: flex;

@@ -84,12 +84,20 @@
       
     },
     activated () {
-      this.$refs.scroll.scroll.scrollTo(0,this.saveY,0)
+      //重新计算 better-scroll，当 DOM 结构发生变化的时候务必要调用确保滚动的效果正常。
       this.$refs.scroll.scroll.refresh();
+      //进来时候赋值上次离开时保存的saveY值
+      //要在刷新后赋值
+      this.$refs.scroll.scroll.scrollTo(0,this.saveY,0)
+
+      
     },
     deactivated () {
       //离开时候保存滚动高度y
+      //此时获取的y不准确
       this.saveY = this.$refs.scroll.scroll.y
+      console.log('home被销毁时候的y'+this.saveY);
+
     },
     methods: {
       itemClick(index){
@@ -111,20 +119,22 @@
       backClick(){
         this.$refs.scroll.scroll.scrollTo(0,0,1000);
       },
-      //scroll.vue发射出来的自定义事件，并且传了参数position
+      //scroll.vue发射出来的自定义事件，并且传了参数position对象，position.x, position.y获取滚动的实时坐标
       contentScroll(position){
         //1.判断backtop是否显示
         this.isShowBackTop = -position.y > 1000
-        //2.判断tabcontrol是否吸顶
+        //2.判断tabcontrol2是否吸顶/显示
         
         this.isFixed = -position.y > this.tabOffsetTop
         
       },
+      //上拉加载更多
       pullingUp(){
         this.getHomeData(this.currentType);
         // console.log('shanglajiazaigengduo')
       },
       swiperLoad(){
+        //当轮播图加载完成，获取tabcontrol1的offsettop值
         this.tabOffsetTop = this.$refs.tabControl1.$el.offsetTop
       },
 
@@ -138,6 +148,7 @@
       getHomeData(type){
         const page = this.goodsList[type].page + 1;
         getHomeData(type,page).then(res=>{
+          console.log(res.data)
           this.goodsList[type].list.push(...res.data.data.list);
           this.goodsList[type].page+=1;
           this.$refs.scroll.scroll.finishPullUp();

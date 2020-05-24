@@ -58,7 +58,8 @@
   }
   .tabItem img{
     width:24px;
-    vertical-align: middle;
+    margin-top: 3px;
+    /* vertical-align: middle; */
   }
   /*.active{*/
   /*  color:deeppink;*/

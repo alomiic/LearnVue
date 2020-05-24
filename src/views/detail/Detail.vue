@@ -1,15 +1,19 @@
 <template>
   <div id="detail">
     <detail-nav-bar></detail-nav-bar>
+
     <scroll class="content">
-      <detail-swiper :topImages="topImages"></detail-swiper>
-      <detail-base-info :BaseInfo="BaseInfo"></detail-base-info>
-      <detail-shop-info :ShopInfo="ShopInfo"></detail-shop-info>
-      <detail-goods :detailInfo="detailInfo"></detail-goods>
-      <detail-params :itemparams="itemParams"></detail-params>
-      <detail-user-info :userInfo="userInfo"></detail-user-info>
-      <detail-recommend :recommend="recommend"></detail-recommend>
+      <div>
+        <detail-swiper :topImages="topImages"></detail-swiper>
+        <detail-base-info :BaseInfo="BaseInfo"></detail-base-info>
+        <detail-shop-info :ShopInfo="ShopInfo"></detail-shop-info>
+        <detail-goods :detailInfo="detailInfo"></detail-goods>
+        <detail-params :itemparams="itemParams"></detail-params>
+        <detail-user-info :userInfo="userInfo"></detail-user-info>
+        <detail-recommend :recommend="recommend"></detail-recommend>
+      </div>
     </scroll>
+    <detail-bottom-bar @addToCart="addToCart"></detail-bottom-bar>
   </div>
 </template>
 
@@ -24,6 +28,7 @@
   import DetailParams from './child/DetailParams'
   import DetailUserInfo from './child/DetailUserInfo'
   import DetailRecommend from './child/DetailRecommend'
+  import DetailBottomBar from './child/DetailBottomBar'
 
   import { getDetaildata  , getRecommend , BaseInfo , Shop , ParamsInfo } from 'network/detail'
   export default {
@@ -37,7 +42,8 @@
       DetailGoods,
       DetailParams,
       DetailUserInfo,
-      DetailRecommend
+      DetailRecommend,
+      DetailBottomBar
     },
     data(){
       return {
@@ -69,7 +75,7 @@
         this.itemParams = new ParamsInfo(data.itemParams)
         this.userInfo = data.rate.list[0]
         
-        // console.log(this.skuInfo)
+        console.log(this.BaseInfo)
       })
       },
       getRecommend(){
@@ -77,6 +83,19 @@
           console.log(res)
           this.recommend = res.data.data.list
         })
+      },
+      addToCart(){
+        console.log('加入购物车');
+        const product = {}
+        product.image = this.topImages[0]
+        product.title = this.BaseInfo.title
+        product.desc = this.BaseInfo.desc
+        product.price = this.BaseInfo.nowPrice
+        product.iid = this.iid
+        product.count = 0
+        console.log(product);
+        
+        this.$store.commit("addCart",product)
       }
     }
   }
@@ -84,14 +103,16 @@
 
 <style>
   #detail{
-    /* overflow: hidden; */
+    overflow: hidden;
     height: 100vh;
     position: relative;
     z-index: 9;
     background-color: #fff;
   }
   .content{
-    height:calc(100% - 44px);
-    background-color: #fff;
+    height:calc(100% - 44px - 58px);
+    /* position: absolute;
+    top: 44px;
+    bottom: 60px; */
   }
 </style>

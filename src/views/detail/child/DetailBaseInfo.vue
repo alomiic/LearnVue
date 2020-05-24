@@ -39,7 +39,7 @@
   }
 </script>
 
-<style>
+<style scoped>
   .info{
     padding: 15px 5px;
     border-bottom: 5px solid #eee;
