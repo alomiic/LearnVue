@@ -74,6 +74,7 @@
       this.getHomeData('pop');
       this.getHomeData('new');
       this.getHomeData('sell');
+      //test edit
     },
     mounted () {
       this.$bus.$on('imgLoad',()=>{
